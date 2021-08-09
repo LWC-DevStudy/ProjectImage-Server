@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class PostController {
 
-    PostService postService;
+    private final PostService postService;
 
     @GetMapping("/post")
     public Page<Post> postPage(@RequestParam("page") int page, @RequestParam("size") int size){

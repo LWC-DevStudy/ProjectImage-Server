@@ -17,7 +17,7 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class PostService {
 
-    PostRepository postRepository;
+    private final PostRepository postRepository;
 
     public Page<Post> getPostPage(int page, int size) {
         Pageable pageable = PageRequest.of(page,size);
