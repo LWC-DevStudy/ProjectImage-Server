@@ -30,7 +30,7 @@ public class UserService {
     public void registerUser(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
         String password = requestDto.getPassword();
-        String passwordChecker = requestDto.getPasswordChecker();
+        String passwordChecker = requestDto.getPasswordCheck();
 
         Optional<User> found = userRepository.findByUsername(username);
         if (username.equals("") || password.equals("") || passwordChecker.equals("")) {
