@@ -16,7 +16,7 @@ public class SignupRequestDto {
 
     @NotBlank(message = "PW는 필수 입력 값입니다.")
     private String password;
-    private String passwordChecker;
+    private String passwordCheck;
     private boolean admin = false;
     private String adminToken = "";
 }

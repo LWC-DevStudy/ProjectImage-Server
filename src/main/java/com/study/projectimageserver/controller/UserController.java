@@ -2,6 +2,7 @@ package com.study.projectimageserver.controller;
 
 import com.study.projectimageserver.domain.User;
 import com.study.projectimageserver.dto.SignupRequestDto;
+import com.study.projectimageserver.dto.TokenResponseDto;
 import com.study.projectimageserver.repository.UserRepository;
 import com.study.projectimageserver.security.JwtTokenProvider;
 import com.study.projectimageserver.service.UserService;
@@ -28,12 +29,15 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public String login(@RequestBody SignupRequestDto requestDto) {
+    public TokenResponseDto login(@RequestBody SignupRequestDto requestDto) {
         User user = userRepository.findByUsername(requestDto.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 유저입니다."));
         if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
-        return jwtTokenProvider.createToken(user.getUsername(), user.getRole());
+        TokenResponseDto tokenResponseDto = new TokenResponseDto();
+        tokenResponseDto.setUserId(user.getUserId());
+        tokenResponseDto.setToken(jwtTokenProvider.createToken(user.getUsername(), user.getRole()));
+        return tokenResponseDto;
     }
 }
