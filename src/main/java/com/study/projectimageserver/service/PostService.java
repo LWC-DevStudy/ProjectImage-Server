@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,10 +20,8 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public Page<Post> getPostPage(int page, int size) {
-        Pageable pageable = PageRequest.of(page,size);
-
-        return postRepository.findAllByOrderByCreatedAtDesc(pageable);
+    public List<Post> getPostPage() {
+        return postRepository.findAllByOrderByCreatedAtDesc();
     }
 
     public Long createPost(PostRequestDto postRequestDto, User user) {

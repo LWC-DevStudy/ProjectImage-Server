@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -18,8 +20,8 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/post")
-    public Page<Post> postPage(@RequestParam("page") int page, @RequestParam("size") int size){
-        return postService.getPostPage(page,size);
+    public List<Post> postPage(){
+        return postService.getPostPage();
     }
 
     @PostMapping("/post/create")
