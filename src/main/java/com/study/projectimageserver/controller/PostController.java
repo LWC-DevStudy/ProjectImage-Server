@@ -3,6 +3,7 @@ package com.study.projectimageserver.controller;
 
 import com.study.projectimageserver.domain.Post;
 import com.study.projectimageserver.dto.PostRequestDto;
+import com.study.projectimageserver.dto.PostResponseDto;
 import com.study.projectimageserver.security.UserDetailsImpl;
 import com.study.projectimageserver.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/post")
-    public List<Post> postPage(){
+    public List<PostResponseDto> postPage(){
         return postService.getPostPage();
     }
 

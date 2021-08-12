@@ -8,4 +8,5 @@ public class TokenResponseDto {
 
     private String token;
     private Long userId;
+    private String username;
 }

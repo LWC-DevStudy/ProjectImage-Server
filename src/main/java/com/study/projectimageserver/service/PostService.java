@@ -4,6 +4,7 @@ package com.study.projectimageserver.service;
 import com.study.projectimageserver.domain.Post;
 import com.study.projectimageserver.domain.User;
 import com.study.projectimageserver.dto.PostRequestDto;
+import com.study.projectimageserver.dto.PostResponseDto;
 import com.study.projectimageserver.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,8 +22,14 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public List<Post> getPostPage() {
-        return postRepository.findAllByOrderByCreatedAtDesc();
+    public List<PostResponseDto> getPostPage() {
+        List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc();
+        List<PostResponseDto> postResponseDtos = new ArrayList<>();
+        for (Post post : posts) {
+            PostResponseDto postResponseDto = new PostResponseDto(post);
+            postResponseDtos.add(postResponseDto);
+        }
+        return postResponseDtos;
     }
 
     public Long createPost(PostRequestDto postRequestDto, User user) {
