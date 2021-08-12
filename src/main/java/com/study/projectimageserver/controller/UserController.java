@@ -38,6 +38,7 @@ public class UserController {
         TokenResponseDto tokenResponseDto = new TokenResponseDto();
         tokenResponseDto.setUserId(user.getUserId());
         tokenResponseDto.setToken(jwtTokenProvider.createToken(user.getUsername(), user.getRole()));
+        tokenResponseDto.setUsername(user.getUsername());
         return tokenResponseDto;
     }
 }

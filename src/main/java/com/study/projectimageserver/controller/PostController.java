@@ -3,12 +3,15 @@ package com.study.projectimageserver.controller;
 
 import com.study.projectimageserver.domain.Post;
 import com.study.projectimageserver.dto.PostRequestDto;
+import com.study.projectimageserver.dto.PostResponseDto;
 import com.study.projectimageserver.security.UserDetailsImpl;
 import com.study.projectimageserver.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -18,8 +21,8 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/post")
-    public Page<Post> postPage(@RequestParam("page") int page, @RequestParam("size") int size){
-        return postService.getPostPage(page,size);
+    public List<PostResponseDto> postPage(){
+        return postService.getPostPage();
     }
 
     @PostMapping("/post/create")
