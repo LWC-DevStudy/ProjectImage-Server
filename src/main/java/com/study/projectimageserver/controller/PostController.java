@@ -1,13 +1,11 @@
 package com.study.projectimageserver.controller;
 
 
-import com.study.projectimageserver.domain.Post;
 import com.study.projectimageserver.dto.PostRequestDto;
 import com.study.projectimageserver.dto.PostResponseDto;
 import com.study.projectimageserver.security.UserDetailsImpl;
 import com.study.projectimageserver.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +19,13 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/post")
-    public List<PostResponseDto> postPage(){
-        return postService.getPostPage();
+    public List<PostResponseDto> postPage(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        if(userDetails!=null){
+            return postService.getPostLogin(userDetails.getUser());
+        }else {
+            return postService.getPostPage();
+        }
+
     }
 
     @PostMapping("/post/create")

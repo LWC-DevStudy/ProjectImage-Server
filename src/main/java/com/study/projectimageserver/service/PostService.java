@@ -1,10 +1,12 @@
 package com.study.projectimageserver.service;
 
 
+import com.study.projectimageserver.domain.Liken;
 import com.study.projectimageserver.domain.Post;
 import com.study.projectimageserver.domain.User;
 import com.study.projectimageserver.dto.PostRequestDto;
 import com.study.projectimageserver.dto.PostResponseDto;
+import com.study.projectimageserver.repository.LikenRepository;
 import com.study.projectimageserver.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,7 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final LikenRepository likenRepository;
 
     public List<PostResponseDto> getPostPage() {
         List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc();
@@ -61,5 +64,22 @@ public class PostService {
         }
         postRepository.deleteById(postId);
         return post.getPostId();
+    }
+
+    public List<PostResponseDto> getPostLogin(User user) {
+        List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc();
+        List<PostResponseDto> postResponseDtos = new ArrayList<>();
+        for (Post post : posts) {
+            if(likenRepository.findByPostIdAndUserId(post.getPostId(), user.getUserId()) != null){
+                PostResponseDto postResponseDto = new PostResponseDto(post);
+                postResponseDto.setUserLike(true);
+                postResponseDtos.add(postResponseDto);
+            }else{
+                PostResponseDto postResponseDto = new PostResponseDto(post);
+                postResponseDtos.add(postResponseDto);
+            }
+
+        }
+        return postResponseDtos;
     }
 }
