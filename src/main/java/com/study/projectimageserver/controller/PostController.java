@@ -31,6 +31,9 @@ public class PostController {
     @PostMapping("/post/create")
     public Long createPost(@RequestBody PostRequestDto postRequestDto,
                            @AuthenticationPrincipal UserDetailsImpl userDetails){
+        if(userDetails == null){
+            throw new IllegalArgumentException("로그인 정보가 없습니다.");
+        }
         return postService.createPost(postRequestDto, userDetails.getUser());
     }
 
@@ -38,12 +41,18 @@ public class PostController {
     public Long editPost(@PathVariable(name = "postId") Long postId,
                          @AuthenticationPrincipal UserDetailsImpl userDetails,
                          @RequestBody PostRequestDto postRequestDto){
+        if(userDetails == null){
+            throw new IllegalArgumentException("로그인 정보가 없습니다.");
+        }
         return postService.editPost(postId, postRequestDto, userDetails.getUser());
     }
 
     @DeleteMapping("/post/delete/{postId}")
     public Long deletePost(@PathVariable(name = "postId") Long postId,
                            @AuthenticationPrincipal UserDetailsImpl userDetails){
+        if(userDetails == null){
+            throw new IllegalArgumentException("로그인 정보가 없습니다.");
+        }
         return postService.deletePost(postId, userDetails.getUser());
     }
 
