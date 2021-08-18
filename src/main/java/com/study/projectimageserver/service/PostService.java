@@ -82,4 +82,11 @@ public class PostService {
         }
         return postResponseDtos;
     }
+
+    public PostResponseDto getPostDetail(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(
+                ()-> new NullPointerException("해당 포스트가 없습니다.")
+        );
+        return new PostResponseDto(post);
+    }
 }
